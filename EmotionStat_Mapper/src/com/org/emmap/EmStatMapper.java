@@ -39,7 +39,9 @@ public class EmStatMapper {
 			
 			for(int i=0;i<circleBot.size();i++){
 				FNode current_node = circleBot.get(i);
-				for(int j=0;j<current_node.neighborCount();j++){
+				
+				for(int j=0, added_count = 0;j<current_node.neighborCount();j++){
+					if(!crawling) break;
 					FNode next_node = current_node.getNextNode(j, fb);
 					String this_username = next_node.getUsername();
 					if(!crawledList.contains(this_username)){
@@ -48,20 +50,27 @@ public class EmStatMapper {
 							
 							crawledList.add(this_username);
 							
-							System.out.println("Username: "+current_node.getUsername()+" Depth: "+i+" >> Node "+j+":\n" + newCircle.get(j).getProfile());
+							System.out.println(">> Current: "+current_node.getUsername()+" | Depth: "+i+" | Node "+j+":\n" + newCircle.get(added_count).getProfile());
+							
+							added_count++;
 							ctr++;
 						}catch(Exception e){}
 					}
 				}
-				if(ctr>500){ crawling = false; break;}
+				if(ctr>500 || !crawling){ crawling = false; break;}
 			}
 			
 			circleBot = new ArrayList<FNode>(newCircle);
-			
 		}
 	}
 	
 	public EmStatMapper(){
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+		    public void run() {
+		    	crawling = false;
+		    }
+		 });
+		
 		fb = new FacebookClient();
 		crawling = true;
 		try {
