@@ -34,13 +34,14 @@ public class EmStatMapper {
 		
 		// Begin crawl:
 		int ctr = 0;
+		int level = 0;
 		while(crawling){
 			ArrayList<FNode> newCircle = new ArrayList<FNode>();
 			
 			for(int i=0;i<circleBot.size();i++){
 				FNode current_node = circleBot.get(i);
 				
-				for(int j=0, added_count = 0;j<current_node.neighborCount();j++){
+				for(int j=0;j<current_node.neighborCount();j++){
 					if(!crawling) break;
 					FNode next_node = current_node.getNextNode(j, fb);
 					String this_username = next_node.getUsername();
@@ -50,9 +51,8 @@ public class EmStatMapper {
 							
 							crawledList.add(this_username);
 							
-							System.out.println(">> Current: "+current_node.getUsername()+" | Depth: "+i+" | Node "+j+":\n" + newCircle.get(added_count).getProfile());
+							System.out.println(">> Current: "+current_node.getUsername()+" | Level: "+level+" | Depth: "+i+" | Node "+j+":\n" +next_node.getProfile());
 							
-							added_count++;
 							ctr++;
 						}catch(Exception e){}
 					}
@@ -61,6 +61,7 @@ public class EmStatMapper {
 			}
 			
 			circleBot = new ArrayList<FNode>(newCircle);
+			level++;
 		}
 	}
 	
