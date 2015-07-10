@@ -216,13 +216,16 @@ public class User implements FaceGlobal {
 		
 		// Check if user lives in cache
 		String cache_usr_name = cacheUserPrefix+username;
-		if(JCache.isInCache(cacheUser, cache_usr_name))
-			if(((String)JCache.get(cacheUser, cache_usr_name)).equals("alive_and_updated")){
-				// If he is there AND updated, load his data instead of scraping from facebook
-				load_usr_from_cache(cache_usr_name);
-				return;
-			}
-	
+		
+		try{
+			if(JCache.isInCache(cacheUser, cache_usr_name))
+				if(((String)JCache.get(cacheUser, cache_usr_name)).equals("alive_and_updated")){
+					// If he is there AND updated, load his data instead of scraping from facebook
+					load_usr_from_cache(cache_usr_name);
+					return;
+				}
+		}catch(Exception e){/*The cache has expired, scrape the data */}
+		
 		// He's not there/he's just been id'd, fetch the data from face
 		scraper.scrape(L_LOGIN, user_page_url, null, T_ME_ID_USR);
 		

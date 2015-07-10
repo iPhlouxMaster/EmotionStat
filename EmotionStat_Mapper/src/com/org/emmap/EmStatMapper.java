@@ -12,6 +12,9 @@ public class EmStatMapper {
 	ArrayList<FNode> myFriends;
 	FacebookClient fb;
 	
+	ArrayList<FNode> circleBot;
+	private boolean crawling;
+	
 	private void initializeMainCircle() throws Exception {
 		me = FNode.discover("me", fb);
 		myFriends = new ArrayList<FNode>();
@@ -19,15 +22,51 @@ public class EmStatMapper {
 		// Discover all my friends, update them and insert them into the DB:
 		for(int i=0;i<me.neighborCount();i++){
 			myFriends.add(me.getNextNode(i, fb));
-			System.out.println(" >> Node "+i+":\n" + myFriends.get(i).getProfile());
+			System.out.println(" >> Main Node "+i+":\n" + myFriends.get(i).getProfile());
+		}
+			
+	}
+	
+	public void crawl() throws Exception{
+		ArrayList<String> crawledList = new ArrayList<String>();
+		
+		circleBot = new ArrayList<FNode>(myFriends);
+		
+		// Begin crawl:
+		int ctr = 0;
+		while(crawling){
+			ArrayList<FNode> newCircle = new ArrayList<FNode>();
+			
+			for(int i=0;i<circleBot.size();i++){
+				FNode current_node = circleBot.get(i);
+				for(int j=0;j<current_node.neighborCount();j++){
+					FNode next_node = current_node.getNextNode(j, fb);
+					String this_username = next_node.getUsername();
+					if(!crawledList.contains(this_username)){
+						try{
+							newCircle.add(next_node);
+							
+							crawledList.add(this_username);
+							
+							System.out.println("Username: "+current_node.getUsername()+" Depth: "+i+" >> Node "+j+":\n" + newCircle.get(j).getProfile());
+							ctr++;
+						}catch(Exception e){}
+					}
+				}
+				if(ctr>500){ crawling = false; break;}
+			}
+			
+			circleBot = new ArrayList<FNode>(newCircle);
+			
 		}
 	}
 	
 	public EmStatMapper(){
 		fb = new FacebookClient();
-		
+		crawling = true;
 		try {
 			initializeMainCircle();
+			crawl(); // Start it
 		} catch (Exception e) {
 			JCache.cacheman.shutdown();
 			e.printStackTrace();
