@@ -2,13 +2,14 @@
 
 img{
 	border: 10px solid #4162B0;	
-	box-shadow: 0px 0px 1px #000000;
+	
 	margin: 0 auto;
 }
 
 body{
 	background: url(../img/small_steps.png);
 	background-attachment: fixed;
+	font-family: 'Open Sans', sans-serif;
 }
 
 .well{
@@ -24,8 +25,34 @@ body{
 	border-right: 1px solid #DEDEDE;
 }
 
+.left_col:hover{
+	background-color: #F7F7F7;
+}
+
 .enumerator{
 	font-size: 0.85em;
 	font-weight: bold;
 	color: #D4D4D4;
 }
+
+.glyphicon-chevron-right{
+	font-size: 0.7em;
+	margin-right: 5px;
+}
+
+.person-details{
+	border-top: 2px solid #C4C4C4;
+	margin-left: 0px;
+}
+
+ .navbar-default .navbar-nav > .active{
+   background: #85E6CD;
+ }
+ 
+ .navbar-default .navbar-nav > .active > a, 
+ .navbar-default .navbar-nav > .active > a:hover, 
+ .navbar-default .navbar-nav > .active > a:focus {
+      background: #85E6CD;
+      border-radius: 7px;
+      
+ }
