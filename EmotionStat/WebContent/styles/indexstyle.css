@@ -23,6 +23,9 @@ body{
 
 .left_col{
 	border-right: 1px solid #DEDEDE;
+	border-bottom: 1px solid #DEDEDE;
+	border-top: 1px solid #DEDEDE;
+	border-radius: 3px;
 }
 
 .left_col:hover{
@@ -54,5 +57,20 @@ body{
  .navbar-default .navbar-nav > .active > a:focus {
       background: #85E6CD;
       border-radius: 7px;
-      
  }
+ 
+ .mood_level{
+ 	margin-left: -290px;
+ }
+ 
+ .words_found{
+ 	margin-top: -19px;
+ 	margin-right: -310px;
+ }
+ 
+ .words_found, .mood_level{
+ 	color: #ABABAB;
+ 	font-weight: bold;
+ 	font-size: 0.85em;
+  }
+ 

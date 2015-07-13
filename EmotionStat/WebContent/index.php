@@ -41,6 +41,7 @@
 							<div class="row">
 								<div class="left_col col-md-2">
 									<div id='mydata'>
+										<p style='font-size: 0.7em' class='enumerator'>Profile</p>
 										<div id='myimg'></div>
 										<br>
 										<div id='myname' class='text-center'></div>
@@ -58,10 +59,13 @@
 								</div>
 								<div class="col-md-offset-1 col-md-9">
 									<center>
-									<h4>My mood</h4>
+									<h4>My mood: <span id='mymood'></span></h4>
 									<div id='mycanvas'>
 										<canvas id='mycanvas_area' width="300" height="260"/></canvas>
 										<canvas id='mycanvas_dict' width="300" height="260"/></canvas>
+										<br>
+										<div class='mood_level'>Mood level</div>
+										<div class='words_found'>Words found</div>
 									</div>
 									</center>
 								</div>
